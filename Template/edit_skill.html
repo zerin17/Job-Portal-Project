@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+    /* Body and Global Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7f6;
+      color: #333;
+    }
+  
+    /* Main Container */
+    .container {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+  
+    /* Heading Styling */
+    .heading-container h2 {
+      font-size: 2.5em;
+      color: #4CAF50;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  
+    /* Form Styling */
+    .custom-form {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+  
+    /* Form Group */
+    .form-group {
+      margin-bottom: 25px;
+    }
+  
+    /* Label Styling */
+    .form-label {
+      font-size: 1.1em;
+      color: #333;
+      font-weight: 600;
+    }
+  
+    /* Input Container */
+    .input-container {
+      margin-top: 10px;
+    }
+  
+    .custom-select {
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      padding: 12px;
+      width: 100%;
+      font-size: 1.1em;
+      background-color: #fff;
+      transition: border-color 0.3s ease;
+    }
+  
+    .custom-select:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+  
+    /* Button Styling */
+    .custom-btn {
+      padding: 12px 30px;
+      font-size: 1.2em;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+  
+    .custom-btn:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+  
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+  
+      .custom-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.1em;
+      }
+    }
+  </style>
+<div class="container mt-5">
+    <!-- Page Heading -->
+    <div class="heading-container text-center">
+        <h2 class="text-uppercase">Edit Skill</h2>
+    </div>
+
+    <form class="custom-form p-4" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- User ID (hidden) -->
+        <input type="text" class="d-none" value="{{request.user.id}}" name="user_id" hidden>
+
+        <!-- Skill Selection -->
+        <div class="form-group mb-4">
+            <label for="skills" class="form-label">Select Skill</label>
+            <div class="input-container">
+                <select class="form-control custom-select" id="skills" name="skills" required>
+                    <option value="">Select</option>
+                    <option value="programming">Programming</option>
+                    <option value="networking">Networking</option>
+                    <option value="hardware">Hardware</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="button-container text-center">
+            <button type="submit" class="btn btn-primary custom-btn">Set Skill</button>
+        </div>
+    </form>
+</div>
+
+{% endblock body %}
+
+

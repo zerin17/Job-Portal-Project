@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* General styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fa; /* Soft background color */
+      color: #333; /* Dark text color */
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #05668d; /* Dark teal */
+    }
+
+    /* Card styling */
+    .card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      width: 100%;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+      padding: 20px;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .card h4 {
+      font-size: 1.1em;
+      margin: 10px 0;
+    }
+
+    .card .btn {
+      display: inline-block;
+      background-color: #ff6b6b; /* Rose pink */
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 15px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .card .btn:hover {
+      background-color: #e74c3c; /* Darker rose pink on hover */
+    }
+
+    /* Search bar styling */
+    .search-bar {
+      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .input-group {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .form-control {
+      flex: 1;
+      padding: 15px;
+      font-size: 1em;
+      border: 2px solid #ff6b6b; /* Rose pink border */
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: #56cfe1; /* Sky blue on focus */
+    }
+
+    .input-group .btn {
+      background-color: #56cfe1; /* Sky blue button */
+      color: white;
+      border-radius: 8px;
+      border: none;
+      padding: 15px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .input-group .btn:hover {
+      background-color: #028090; /* Darker teal on hover */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .input-group {
+        flex-direction: column;
+      }
+
+      .form-control,
+      .input-group .btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Main content container -->
+  <div class="container">
+
+    <!-- Search bar section -->
+    <div class="search-bar">
+      <div class="input-group">
+        <form action="{% url 'searchJob' %}" method="GET" style="width: 100%">
+          <input type="text" class="form-control" name="query" placeholder="Search for jobs..." id="search-input">
+          <button class="btn" type="submit" id="search-button">Search</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Job Listings -->
+     <h2>Job Feed</h2>
+    {% for i in jobs %}
+    
+
+      <div class="card">
+        <img src="/{{i.job_Pic}}" alt="Job Image">
+        <div class="container">
+          <h4>JOB TITLE: <b>{{i.job_title}}</b></h4>
+          <h4>CATEGORY: <b>{{i.category}}</b></h4>
+          <h4>SKILLS: <b>{{i.skills}}</b>
+          </h4><h4><b>Description: </b>{{ i.description }}</h4>
+          <h4>VACANCY: <b>{{i.number_of_openings}}</b></h4>
+
+          {% if i.category == "full_time" %}
+            <h4><b>Full Time</b></h4>
+          {% endif %}
+
+          {% if i.category == "part_time" %}
+            <h4><b>Part Time</b></h4>
+          {% endif %}
+
+          {% if i.category == "internship" %}
+            <h4><b>Internship</b></h4>
+          {% endif %}
+
+          {% if request.user.user_type == "seeker" %}
+            <a href="{% url 'apply_now' i.id %}" class="btn">APPLY NOW</a>
+          {% endif %}
+        </div>
+      </div>
+
+    {% endfor %}
+  </div>
+
+</body>
+</html>
+
+{% endblock body %}

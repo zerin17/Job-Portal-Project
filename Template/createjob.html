@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Table Styling */
+        #customers {
+            font-family: 'Arial', sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        /* Table Header Styling */
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #0047ab; /* Dark Blue background */
+            color: white;
+            font-size: 1.1em;
+        }
+
+        /* Table Row Styling */
+        #customers td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Hover Effect for Table Rows */
+        #customers tr:hover {
+            background-color: #f1f1f1; /* Light gray on hover */
+        }
+
+        /* Alternating Row Colors */
+        #customers tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Action Button Styling */
+        .action-buttons a {
+            padding: 8px 15px;
+            margin: 5px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Edit Button */
+        .action-buttons .edit {
+            background-color: #007BFF; /* Blue for Edit */
+        }
+
+        .action-buttons .edit:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Delete Button */
+        .action-buttons .delete {
+            background-color: #ff6b6b; /* Red for Delete */
+        }
+
+        .action-buttons .delete:hover {
+            background-color: #e65c5c;
+        }
+
+        /* View Button */
+        .action-buttons .view {
+            background-color: #00bfff; /* Light Blue for View */
+        }
+
+        .action-buttons .view:hover {
+            background-color: #009ac1; /* Darker light blue on hover */
+        }
+
+        /* Image Styling */
+        #customers img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Title Styling */
+        h1 {
+            color: #333;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>JOBS CREATED BY {{request.user.username}}</h1>
+
+<table id="customers">
+    <tr>
+        <th>Job Title</th>
+        <th>Category</th>
+        <th>Skills</th>
+        <th>Vacancy</th>
+        <th>Job Pic</th>
+        <th>Action</th>
+    </tr>
+    
+    {% for i in jobs %}
+    <tr>
+        <td>{{ i.job_title }}</td>
+        <td>{{ i.category }}</td>
+        <td>{{ i.skills }}</td>
+        <td>{{ i.number_of_openings }}</td>
+        <td>
+            <img src="/{{ i.job_Pic }}" alt="Job Picture">
+        </td>
+        <td class="action-buttons">
+            <a href="{% url 'editjob' i.id %}" class="edit">Edit</a>
+            <a href="{% url 'deletejob' i.id %}" class="delete">Delete</a>
+            <a href="{% url 'viewjob' i.id %}" class="view">View</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
+
+{% endblock body %}

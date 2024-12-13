@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1 style="text-align:center; color: #333; font-family: 'Arial', sans-serif; font-size: 2em;">YOU ARE SEARCHING FOR "{{ query }}"</h1>
+
+<!-- Loop through the jobs and display each job's details -->
+<div class="job-listing">
+  {% for i in jobs %}
+  
+  <div class="card">
+    <img src="/{{ i.job_Pic }}" alt="Job Image" class="job-image">
+    <div class="container">
+      <h4><b>JOB TITLE: </b>{{ i.job_title }}</h4>
+      <h4><b>CATEGORY: </b>{{ i.category }}</h4>
+      <h4><b>SKILLS: </b>{{ i.skills }}</h4>
+      <h4><b>Description: </b>{{ i.description }}</h4>
+      <h4><b>VACANCY: </b>{{ i.number_of_openings }}</h4>
+
+      {% if i.category == "full_time" %}
+      <h4><b>Full Time</b></h4>
+      {% endif %}
+
+      {% if i.category == "part_time" %}
+      <h4><b>Part Time</b></h4>
+      {% endif %}
+
+      {% if i.category == "internship" %}
+      <h4><b>Internship</b></h4>
+      {% endif %}
+
+      {% if request.user.user_type == "seeker" %}
+      <a href="{% url 'apply_now' i.id %}" class="btn btn-outline-secondary"><b>APPLY NOW</b></a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+
+{% endblock body %}
+
+<style>
+  /* Body and Global Styling */
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff99cc, #66b3ff); /* Rose Pink and Sky Blue Gradient */
+    padding: 30px 0;
+    margin: 0;
+    color: #333;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  /* Card Layout and Styles */
+  .job-listing {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  .card {
+    width: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 30px;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .job-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .container {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 0 0 15px 15px;
+  }
+
+  .container h4 {
+    font-size: 1.1em;
+    margin: 8px 0;
+    color: #333;
+  }
+
+  .container b {
+    font-weight: bold;
+    color: #ff66b2; /* Rose Pink */
+  }
+
+  /* Apply Button */
+  .btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #56cfe1; /* Sky Blue */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.3s, transform 0.2s ease;
+  }
+
+  .btn:hover {
+    background-color: #028090; /* Darker teal on hover */
+    transform: scale(1.05);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .job-listing {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      width: 80%;
+    }
+
+    h1 {
+      font-size: 1.8em;
+    }
+  }
+</style>

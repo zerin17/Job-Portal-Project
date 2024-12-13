@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <style>
+        /* Reset and body styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #a1c4fd); /* Rose pink to sky blue */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        
+        /* Container styling */
+        .container {
+            background-color: #ffffff;
+            padding: 20px 30px;  /* Further reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 600px; /* Set to 600px for extra width */
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 1.4em;  /* Further reduced heading size */
+            margin-bottom: 0.4em;
+            color: #ff758c; /* Deep rose pink */
+        }
+        
+        label {
+            display: block;
+            margin: 6px 0 4px;  /* Reduced margin */
+            color: #666;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        
+        /* Input and select styling */
+        input, select {
+            width: 100%;
+            padding: 8px;  /* Further reduced padding */
+            margin-bottom: 10px;  /* Reduced space between inputs */
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9em;  /* Smaller font size for inputs */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #ff758c; /* Rose pink */
+            box-shadow: 0 0 5px rgba(255, 117, 140, 0.4);
+            outline: none;
+        }
+        
+        /* Button styling */
+        button {
+            width: 100%;
+            padding: 8px; /* Reduced button size */
+            background-color: #ff758c; /* Rose pink */
+            color: white;
+            font-weight: bold;
+            font-size: 1em; /* Smaller button text */
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        button:hover {
+            background-color: #ff5b7f; /* Slightly darker pink */
+            transform: translateY(-2px);
+        }
+        
+        /* Link styling */
+        .link {
+            color: #a1c4fd; /* Sky blue */
+            text-decoration: none;
+            font-size: 0.85em;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Error message styling */
+        .error {
+            color: #ff5b7f;
+            font-size: 0.8em;
+            display: none;
+            margin-top: -8px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Signup Form</h2>
+        <form action="" id="signupForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+
+            <label for="profile_pic">Profile Pic:</label>
+            <input type="file" id="profile_pic" name="profile_pic" required>
+
+            <label for="contact_no">Contact Number:</label>
+            <input type="text" id="contact_no" name="contact_no" required>
+
+
+            <label for="user_type">User Type:</label>
+            <select id="user_type" name="user_type" required>
+                <option value="">Select...</option>
+                <option value="seeker">Seeker</option>
+                <option value="recruiter">Recruiter</option>
+            </select>
+
+            <button type="submit">Signup</button>
+            
+            <a href="{% url 'loginPage' %}" class="link">Already Have an Account?</a>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            const age = document.getElementById('age').value;
+            const ageError = document.getElementById('ageError');
+            ageError.style.display = 'none';
+
+            if (age < 18) {
+                event.preventDefault();
+                ageError.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

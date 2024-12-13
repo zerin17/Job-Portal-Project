@@ -1,0 +1,20 @@
+<ul>
+  <li><a href=" {% url 'homePage' %} ">Home</a></li>
+  <li><a href=" {% url 'jobfeed' %} ">JOB FEED</a></li>
+  
+
+  {% if request.user.user_type == "seeker"  %}
+  <li><a href=" {% url 'addSkill' %} ">Add Skill</a></li>
+  <li><a href=" {% url 'skill_matchingPage' %} ">Skill Matching Page</a></li>
+
+  {% endif %}
+  
+  <li style="float:right"><a class="active" href=" {% url 'logoutPage' %} ">Log out</a></li>
+  
+  <li style="float:right"><a class="active" href=" {% url 'profilePage' %} ">Profile-{{ request.user.username }}-{{ request.user.user_type }}</a></li>
+</ul> 
+
+
+
+
+    

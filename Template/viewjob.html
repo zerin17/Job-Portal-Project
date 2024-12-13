@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% for i in jobs %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Elegant Card Styling */
+    .card {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft but elegant shadow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 15px; /* More rounded corners for elegance */
+      overflow: hidden;
+      width: 100%;
+      max-width: 450px; /* Increased width for a more spacious feel */
+      margin: 30px auto; /* Center the card */
+      background-color: #ffffff; /* Clean white background */
+      border: 1px solid #ddd; /* Light border for elegance */
+    }
+
+    .card:hover {
+      transform: translateY(-10px); /* Subtle lift effect */
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+    }
+
+    /* Image styling */
+    .card img {
+      width: 100%;
+      height: 250px; /* Larger image height for more impact */
+      object-fit: cover; /* Ensures the image fills the area */
+      border-bottom: 1px solid #ddd; /* Border separating the image */
+    }
+
+    /* Container inside the card */
+    .container {
+      padding: 20px;
+      text-align: left;
+    }
+
+    /* Header text styles */
+    .container h4 {
+      font-size: 1.3em;
+      color: #333; /* Dark gray for readability */
+      margin: 12px 0;
+      font-weight: 600; /* Semi-bold for more elegance */
+    }
+
+    /* Styling for labels */
+    .container b {
+      color: #007BFF; /* Soft blue for labels */
+      font-weight: 600;
+    }
+
+    /* Button Styling */
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #56cfe1; /* Sky blue for buttons */
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #028090; /* Darker shade of blue */
+      transform: scale(1.05);
+    }
+
+    /* Responsive Design for mobile */
+    @media (max-width: 768px) {
+      .card {
+        width: 85%; /* Adjust the width for smaller screens */
+      }
+      .container h4 {
+        font-size: 1.1em; /* Slightly smaller text on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align:center; color: #333; margin-bottom: 30px;">Job</h2>
+
+{% for i in jobs %}
+<div class="card">
+  <img src="/{{i.job_Pic}}" alt="Job Image">
+  <div class="container">
+    <h4><b>Job Title:</b> {{i.job_title}}</h4>
+    <h4><b>Category:</b> {{i.category}}</h4>
+    <h4><b>Skills:</b> {{i.skills}}</h4>
+    <h4><b>Vacancies:</b> {{i.number_of_openings}}</h4>
+
+    {% if request.user.user_type == "seeker" %}
+    <a href="{% url 'apply_now' i.id %}" class="btn btn-primary">Apply Now</a>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+</body>
+</html>
+
+{% endfor %}
+{% endblock body %}
